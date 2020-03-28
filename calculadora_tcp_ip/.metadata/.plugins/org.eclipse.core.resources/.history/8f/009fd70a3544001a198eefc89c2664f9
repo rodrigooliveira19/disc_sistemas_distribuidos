@@ -1,0 +1,53 @@
+package br.com.modelo;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+public class TCPClient {
+	
+	public static void main(String[] args) throws UnknownHostException, IOException {
+		
+		try(Socket socket = new Socket("localhost", 1500)){
+			
+			somar(socket);
+			
+		}
+		
+	}
+	
+	public static void somar(Socket socket) throws IOException {
+		
+		int somar = 1; 
+		int x = 10; 
+		int y = 5; 
+		
+		OutputStream socketOut = socket.getOutputStream(); 
+		DataOutputStream dOut = new DataOutputStream(socketOut); 
+		
+		//Enviando os valores para o servidor
+		/*
+		dOut.writeInt(somar);
+		System.out.println("Operação enviada: ");
+		dOut.writeInt(x);
+		dOut.writeInt(y);
+		System.out.println("Operação finalizada: ");
+		*/
+		
+		String dados = somar +";"+x +";"+y; 
+		dOut.writeBytes(dados);
+		
+		//Recebendo os valores do Servidor
+		InputStream socketIn = socket.getInputStream(); 
+		DataInputStream dIn = new DataInputStream(socketIn); 
+		
+		int valorRetorno = dIn.readInt(); 
+		System.out.println("Valor da Soma: "+valorRetorno);
+		
+	}
+
+}

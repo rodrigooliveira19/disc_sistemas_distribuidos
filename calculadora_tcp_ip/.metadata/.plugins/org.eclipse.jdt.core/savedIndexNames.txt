@@ -1,0 +1,17 @@
+INDEX VERSION 1.131+/aplicativos-exe/eclipse-workspace/calculadora_tcp_ip/.metadata/.plugins/org.eclipse.jdt.core
+2527668972.index
+1175494123.index
+1224266105.index
+1663179380.index
+2077864471.index
+2256306942.index
+499655553.index
+1237166149.index
+640165166.index
+545708177.index
+2993462362.index
+811681403.index
+3126479850.index
+1330660198.index
+1499990227.index
+889228020.index

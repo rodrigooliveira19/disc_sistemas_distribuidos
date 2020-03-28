@@ -1,0 +1,58 @@
+package br.com.modelo;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class TCPServer {
+	
+	public static Calculadora calculadora = new Calculadora(); 
+	
+	public static void main(String[] args) throws IOException {
+		
+		int posi = 0; 
+		Integer valores[] = new Integer[3];
+		  
+		//Socket para receber conexões do cliente
+		try(ServerSocket serverSocket = new ServerSocket(1500)){
+			System.out.println("Rodando Servidor");
+			
+		  while(true) {
+			  System.out.println("Aguardando requisição");
+			  Socket clientSocket = serverSocket.accept();
+			  System.out.println("Cliente conectado");
+			  
+			  InputStream socketIn = clientSocket.getInputStream();  
+			  DataInputStream din = new DataInputStream(socketIn); 
+			  
+			  valores[posi] = din.readInt(); 
+			  System.out.println("Valor recebido: "+valores[posi]);
+			  posi++; 
+			  System.out.println("Valor recebido: "+valores[posi]);
+			  //Verificar se já recebeu os trê valores do cliente
+			  if (posi == 3) {
+				  
+				  if(valores[0] == 1) {
+					  somar(valores,clientSocket ); 
+					  posi= 0; 
+				  }
+			  }
+			  
+		  }
+           	
+		}
+		
+	}
+
+	private static void somar(Integer[] valores, Socket clientSocket) throws IOException {
+		
+		OutputStream socketOut = clientSocket.getOutputStream(); 
+		DataOutputStream dOut = new DataOutputStream(socketOut); 
+		dOut.writeInt(calculadora.somar(valores[1], valores[2]));
+	}
+
+}
